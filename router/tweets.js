@@ -68,6 +68,7 @@ export default router;
     "email": "fkdlxmfkdl@google.com"
   }
  */
+/*
 const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) { // validation 결과가 true 이면 정상, false 이면 validation 에러 확인
@@ -103,7 +104,7 @@ router.get(
     res.send('success');
   }
 );
-
+*/
 // check -> 모든 값 검사
 // body
 // cookie
