@@ -39,14 +39,17 @@ app.use((error, req, res, next) => {
   res.status(500).send('Server Error');
 });
 
-app.listen(config.port);
+//app.listen(config.port);
 // [ MySQL ]
-db.getConnection();
+//db.getConnection();
 
 // [ MongoDB ]
-// connectDB().then(() => {
-//   app.listen(config.port);
-// }).catch(console.error);
+connectDB().then(() => {
+  const server = app.listen(config.port);
+  if (server) {
+    console.log('server start !!!');
+  }
+}).catch(console.error);
 
 // [ Socket IO ]
 // const server = app.listen(config.port);

@@ -3,10 +3,10 @@ import jwt from 'jsonwebtoken';
 import 'express-async-errors';
 
 // DataBase is MySQL
-import * as userRepository from '../data/auth.js';
+// import * as userRepository from '../data/auth.js';
 
 // DataBase is MongoDB
-// import * as userRepository from '../data/auth_mongo.js';
+import * as userRepository from '../data/auth_mongo.js';
 
 import { config } from '../config.js';
 

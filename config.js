@@ -30,7 +30,7 @@ export const config = {
     password: required('DB_PASSWORD'),
   },
   mongo: {
-    host: required('MONGO_HOST'),
+    host: required('MONGODB_URI'),
   },
   cors: {
     allowedOrigin: required('CORS_ALLOW_ORIGIN'),
