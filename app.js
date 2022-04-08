@@ -42,7 +42,7 @@ app.use((error, req, res, next) => {
 connectDB().then(() => {
   const server = app.listen(config.port);
   if (server) {
-    console.log('server start !!!');
+    console.log('server start !!!!');
   }
 }).catch(console.error);
 
