@@ -1,8 +1,6 @@
 import express from 'express';
 import 'express-async-errors';
 import { body, param, validationResult } from 'express-validator';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 
 import * as tweetController from '../controller/tweet.js';
 import { validate as validation } from '../middleware/validator.js';

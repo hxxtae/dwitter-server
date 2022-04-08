@@ -8,7 +8,6 @@ import { Server } from 'socket.io';
 import tweetsRouter from './router/tweets.js';
 import authRouter from './router/auth.js';
 import { config } from './config.js';
-import { db } from './db/database.js';
 import { connectDB } from './db/mongo.js';
 
 const app = express();
@@ -38,10 +37,6 @@ app.use((error, req, res, next) => {
   console.log(error);
   res.status(500).send('Server Error');
 });
-
-//app.listen(config.port);
-// [ MySQL ]
-//db.getConnection();
 
 // [ MongoDB ]
 connectDB().then(() => {

@@ -1,11 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-// DataBase is MySQL
-// import * as userRepository from '../data/auth.js';
-
-// DataBase is MongoDB
 import * as userRepository from '../data/auth_mongo.js';
-
 import { config } from '../config.js'
 
 const AUTH_ERROR = { message: 'Authorization' };

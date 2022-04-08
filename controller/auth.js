@@ -2,10 +2,6 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import 'express-async-errors';
 
-// DataBase is MySQL
-// import * as userRepository from '../data/auth.js';
-
-// DataBase is MongoDB
 import * as userRepository from '../data/auth_mongo.js';
 
 import { config } from '../config.js';
@@ -13,9 +9,6 @@ import { config } from '../config.js';
 // ---------------------------------
 // [ MVC ( Controller ) ]
 // ---------------------------------
-
-// TODO: Make it secure!
-
 
 export async function signup(req, res, next) {
   const { username, password, name, email, url } = req.body;

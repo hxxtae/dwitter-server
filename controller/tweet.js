@@ -1,7 +1,3 @@
-// DataBase is MySQL
-// import * as tweetRepository from '../data/tweet.js';
-
-// DataBase is MongoDB
 import * as tweetRepository from '../data/tweet_mongo.js';
 
 // ---------------------------------
