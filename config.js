@@ -22,15 +22,9 @@ export const config = {
   bcrypt: {
     saltRounds: parseInt(required('BCRYPT_SALT_ROUNDS', 10)),
   },
-  port: parseInt(required('PORT', 8080)),
-  db: {
-    host: required('DB_HOST'),
-    user: required('DB_USER'),
-    database: required('DB_DATABASE'),
-    password: required('DB_PASSWORD'),
-  },
+  port: parseInt(required('PORT')),
   mongo: {
-    host: required('MONGO_HOST'),
+    host: required('MONGODB_URI'),
   },
   cors: {
     allowedOrigin: required('CORS_ALLOW_ORIGIN'),

@@ -4,21 +4,25 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import 'express-async-errors';
 import { Server } from 'socket.io';
+import cookieParser from 'cookie-parser';
 
 import tweetsRouter from './router/tweets.js';
 import authRouter from './router/auth.js';
 import { config } from './config.js';
-import { db } from './db/database.js';
 import { connectDB } from './db/mongo.js';
 
 const app = express();
 const corsOption = {
   origin: config.cors.allowedOrigin,
   optionsSuccessStatus: 200,
+  credentials: true, // allow the Access-Control-Allow-Credentials
+  // -> 서버에서 response를 보낼 때, 꼭 브라우저에서 보낸 Access-Control-Allow-Credentials 를 포함해야
+  //    브라우저가 서버로 부터 데이터를 받았을 때 클라이언트의 JavaScript 로 body 안의 데이터를 보내줄 수 있기 때문이다.
 };
 
 // 기본 미들웨어 설정
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors(corsOption));
 app.use(helmet());
 app.use(morgan('tiny'));
@@ -39,14 +43,13 @@ app.use((error, req, res, next) => {
   res.status(500).send('Server Error');
 });
 
-app.listen(config.port);
-// [ MySQL ]
-db.getConnection();
-
 // [ MongoDB ]
-// connectDB().then(() => {
-//   app.listen(config.port);
-// }).catch(console.error);
+connectDB().then(() => {
+  const server = app.listen(config.port);
+  if (server) {
+    console.log('server start !!!!');
+  }
+}).catch(console.error);
 
 // [ Socket IO ]
 // const server = app.listen(config.port);
