@@ -28,5 +28,8 @@ export const config = {
   },
   cors: {
     allowedOrigin: required('CORS_ALLOW_ORIGIN'),
-  }
+  },
+  csrf: {
+    plainToken: required('CSRF_SECRET_KEY'),
+  },
 };

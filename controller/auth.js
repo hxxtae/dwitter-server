@@ -3,11 +3,11 @@ import jwt from 'jsonwebtoken';
 import 'express-async-errors';
 
 import * as userRepository from '../data/auth_mongo.js';
-
 import { config } from '../config.js';
 
 // ---------------------------------
 // [ MVC ( Controller ) ]
+// - error message 처리는 controller & middleware 에서
 // ---------------------------------
 
 export async function signup(req, res, next) {
@@ -28,7 +28,7 @@ export async function signup(req, res, next) {
   // [ 토큰 데이터 생성 조건 ]
   // Database 에서 유저 확인 후 존재하면 -> Token 데이터 생성
   // Database 에서 유저 확인 후 존재하지 않으면 -> 에러 메세지
-  const token = await createJwtToken(userId);
+  const token = createJwtToken(userId);
   setToken(res, token); // 토큰 데이터 쿠키에 저장
   res.status(201).json({ token, username });
 };
@@ -47,7 +47,7 @@ export async function login(req, res, next) {
   // [ 토큰 데이터 생성 조건 ]
   // Database 에서 유저 확인 후 존재하면 -> Token 데이터 생성
   // Database 에서 유저 확인 후 존재하지 않으면 -> 에러 메세지
-  const token = await createJwtToken(user.id);
+  const token = createJwtToken(user.id);
   setToken(res, token); // 토큰 데이터 쿠키에 저장
   res.status(200).json({ token, username });
   // header 안의 cookie header 로 token 데어터를 보내주지 않고
@@ -61,7 +61,7 @@ export async function logout(req, res, next) {
 }
 
 // Set Jwt
-async function createJwtToken(id) {
+function createJwtToken(id) {
   return jwt.sign(
     {
       id,
@@ -94,5 +94,14 @@ export async function me(req, res, next) {
     return res.status(404).json({ message: 'User not found' });
   }
   res.status(200).json({ token: req.token, username: user.username });
+}
+
+export async function csrfToken(req, res, next) {
+  const csrfToken = await generateCSRFToken();
+  res.status(200).json({ csrfToken });
+}
+
+async function generateCSRFToken() {
+  return bcrypt.hash(config.csrf.plainToken, 1);
 }
 
