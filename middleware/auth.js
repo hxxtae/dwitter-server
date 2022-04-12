@@ -8,15 +8,15 @@ const AUTH_ERROR = { message: 'Authorization' };
 export const isAuth = async (req, res, next) => {
   let token;
 
-  // 1. check the header first (not used)
+  // 1. check the header first (브라우저외 클라이언트용) -> Header (for Non-Browser Client)
   const authHeader = req.get('Authorization');
   if ((authHeader && authHeader.startsWith('Bearer'))) {
     token = authHeader.split(' ')[1];
   }
   // 클라이언트에서 header 에 Authorization: `Bearer ${token}` 값을 넘겨주어야 한다.
-  // 하지만 cookie 를 사용하고 나서 부터는 더이상 사용하지 않는다.
+  // 하지만 cookie 를 사용하고 나서 부터는 브라우저에서 더이상 사용하지 않는다.
 
-  // 2. check the cookie second
+  // 2. check the cookie second -> Cookie (for Browser)
   if (!token) {
     token = req.cookies['token'];
   }
