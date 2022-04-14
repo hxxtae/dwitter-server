@@ -11,6 +11,7 @@ import authRouter from './router/auth.js';
 import { config } from './config.js';
 import { connectDB } from './db/mongo.js';
 import { csrfCheck } from './middleware/csrf.js';
+import rateLimit from './middleware/rate-limiter.js';
 
 const app = express();
 const corsOption = {
@@ -23,13 +24,14 @@ const corsOption = {
 };
 
 // 기본 미들웨어 설정
-// - 각 함수의 호출로 callback 함수를 반환한다.
+// - 각 함수의 호출이나 지정으로 callback 함수를 반환한다.
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOption));
 app.use(helmet());
 app.use(morgan('tiny'));
 app.use(csrfCheck);
+app.use(rateLimit);
 
 // Route(tweets)
 app.use('/tweets', tweetsRouter);
@@ -44,7 +46,9 @@ app.use((req, res, next) => {
 // Error
 app.use((error, req, res, next) => {
   console.log(error);
-  res.status(500).send('Server Error');
+  res.status(error.status || 500).json({
+    message: error.message,
+  });
 });
 
 // [ MongoDB ]
