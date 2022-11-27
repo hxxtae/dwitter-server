@@ -3,14 +3,14 @@ import jwt from 'jsonwebtoken';
 import * as userRepository from '../data/auth_mongo.js';
 import { config } from '../config.js'
 
-const AUTH_ERROR = { message: 'Authorization' };
+const AUTH_ERROR = { message: 'Authorization Error' };
 
 export const isAuth = async (req, res, next) => {
   let token;
 
   // 1. check the header first (브라우저외 클라이언트용) -> Header (for Non-Browser Client)
   const authHeader = req.get('Authorization');
-  if ((authHeader && authHeader.startsWith('Bearer'))) {
+  if ((authHeader && authHeader.startsWith('Bearer '))) {
     token = authHeader.split(' ')[1];
   }
   // 클라이언트에서 header 에 Authorization: `Bearer ${token}` 값을 넘겨주어야 한다.
